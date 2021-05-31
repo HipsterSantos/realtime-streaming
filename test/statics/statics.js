@@ -20,6 +20,28 @@ Animal.search('Rover', function (err) {
 })
 
 // Using plugin on mongodb
+module.exports = exports = function lastModifiedPlugin(schema,option){
+  schema.add({lastMod: Date});
+  schema.pre('save',function(next){
+    this.lastMod  = new Date;
+    next();
 
+    if (options && options.index) {
+   schema.path('lastMod').index(options.index)
+ }
+  })
+}
+
+var ExchemaExample  = new userSchema.plugin(lastMod) 
+//here's how to implement a plug console.log(require('util').inspect(
+var lastMod = require('./lastMod');
+
+var Game = new Schema({ ... });
+
+Game.plugin(lastMod);
+
+var Player = new Schema({ ... });
+
+Player.plugin(lastMod, { index: true });
 
 //now using statics for searching data
